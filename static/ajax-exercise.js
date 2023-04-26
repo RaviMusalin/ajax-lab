@@ -22,7 +22,7 @@ function showWeather(evt) {
   const zipcode = document.querySelector('#zipcode-field').value;
 
   // TODO: request weather with that URL and show the forecast in #weather-info
-  fetch(url)
+  fetch(`${url} ?zipcode=${zipcode}`)
   .then((response) => response.json())
   .then((weather) => {
     document.querySelector('#weather-info').innerHTML = weather['forecast'];
@@ -52,9 +52,13 @@ function orderMelons(evt) {
   })
     .then((response) => response.json())
     .then((melonInfo) => {
-        if (formInputs.qty > 10) {
-            document.querySelector('#order-status').innerHTML = result_text;
+        if (melonInfo.code == "OK") {
+            // document.querySelector('#order-status').innerHTML = code;
+            document.querySelector('#order-status').innerHTML = `<p>${melonInfo.msg}</p>`
+        } else {
+            document.querySelector('#order-status').innerHTML = `<p><b>${melonInfo.msg}</b></p>`;
         }
+
     });
 };
 
